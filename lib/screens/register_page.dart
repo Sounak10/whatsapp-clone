@@ -1,29 +1,33 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:wap_clone/components/login_field.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/src/widgets/framework.dart';
+import 'package:flutter/src/widgets/placeholder.dart';
 
-class SignupScreen extends StatefulWidget {
-  final VoidCallback showRegisterPage;
-  const SignupScreen({super.key, required this.showRegisterPage});
+import '../components/login_field.dart';
+
+class RegisterPage extends StatefulWidget {
+  final VoidCallback showLoginPage;
+  const RegisterPage({super.key, required this.showLoginPage});
+
   @override
-  State<SignupScreen> createState() => _SignupScreenState();
+  State<RegisterPage> createState() => _RegisterPageState();
 }
 
-class _SignupScreenState extends State<SignupScreen> {
+class _RegisterPageState extends State<RegisterPage> {
   final emailController = TextEditingController();
   final passwordController = TextEditingController();
-
-  Future signIn() async {
-    await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: emailController.text.trim(),
-        password: passwordController.text.trim());
-  }
 
   @override
   void dispose() {
     emailController.dispose();
     passwordController.dispose();
     super.dispose();
+  }
+
+  Future signUp() async {
+    await FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: emailController.text.trim(),
+        password: passwordController.text.trim());
   }
 
   @override
@@ -93,7 +97,7 @@ class _SignupScreenState extends State<SignupScreen> {
                         height: 20,
                       ),
                       GestureDetector(
-                        onTap: signIn,
+                        onTap: signUp,
                         child: Container(
                           padding: const EdgeInsets.all(20),
                           decoration: BoxDecoration(
@@ -101,7 +105,7 @@ class _SignupScreenState extends State<SignupScreen> {
                               borderRadius: BorderRadius.circular(12)),
                           child: const Center(
                             child: Text(
-                              "Sign in",
+                              "Sign Up",
                               style:
                                   TextStyle(color: Colors.white, fontSize: 20),
                             ),
@@ -115,13 +119,13 @@ class _SignupScreenState extends State<SignupScreen> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           const Text(
-                            "Still not signed up yet!!",
+                            "Register Now!!!!!  Already have an account?",
                             style: TextStyle(fontWeight: FontWeight.bold),
                           ),
                           GestureDetector(
-                            onTap: widget.showRegisterPage,
+                            onTap: widget.showLoginPage,
                             child: const Text(
-                              " Register now",
+                              " Sign In",
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   color: Color(0xFFF87A44)),
