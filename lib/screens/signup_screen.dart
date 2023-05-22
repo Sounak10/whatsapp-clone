@@ -2,6 +2,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:wap_clone/components/login_field.dart';
 import 'package:flutter/material.dart';
 
+import 'forgot_pw_page.dart';
+
 class SignupScreen extends StatefulWidget {
   final VoidCallback showRegisterPage;
   const SignupScreen({super.key, required this.showRegisterPage});
@@ -95,11 +97,22 @@ class _SignupScreenState extends State<SignupScreen> {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
                         children: [
-                          Text("Forgot password?"),
+                          GestureDetector(
+                            onTap: () {
+                              Navigator.push(context,
+                                  MaterialPageRoute(builder: (context) {
+                                return ForgotPassword();
+                              }));
+                            },
+                            child: Text("Forgot password?",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    color: Color(0xFFF87A44))),
+                          ),
                         ],
                       ),
                       SizedBox(
-                        height: 10,
+                        height: 15,
                       ),
                       GestureDetector(
                         onTap: signIn,
