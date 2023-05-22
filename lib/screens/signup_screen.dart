@@ -92,6 +92,15 @@ class _SignupScreenState extends State<SignupScreen> {
                       const SizedBox(
                         height: 20,
                       ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.end,
+                        children: [
+                          Text("Forgot password?"),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
                       GestureDetector(
                         onTap: signIn,
                         child: Container(
