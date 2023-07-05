@@ -37,6 +37,11 @@ dependencies:
   eva_icons_flutter: ^3.1.0
   firebase_core: ^2.13.0
   firebase_auth: ^4.6.1
+  cloud_firestore: ^4.8.2
+  firebase_storage: ^11.2.4
+  google_sign_in: ^6.1.4
+  cached_network_image: ^3.2.3
+  image_picker: ^1.0.0
 
 dev_dependencies:
   flutter_test:
