@@ -1,5 +1,4 @@
 import 'dart:developer';
-import 'dart:ffi';
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -55,7 +54,7 @@ class Helper {
 
     final newUser = UserData(
         image: user.photoURL.toString(),
-        about: "New User",
+        about: "Hi there I am using QuickChat",
         name: user.displayName.toString(),
         createdAt: time,
         isOnline: false,
@@ -111,11 +110,12 @@ class Helper {
   static Stream<QuerySnapshot<Map<String, dynamic>>> getAllMsgs(UserData user) {
     return firestore
         .collection('chats/${getChatRoomId(user.id)}/messages/')
+        .orderBy('sendTime', descending: true)
         .snapshots();
   }
 
   //To send message
-  static Future<void> sendMsg(UserData sendUser, String msg) async {
+  static Future<void> sendMsg(UserData sendUser, String msg, Type type) async {
     final time = DateTime.now().millisecondsSinceEpoch.toString();
 
     final ChatModel message = ChatModel(
@@ -123,11 +123,33 @@ class Helper {
         toUID: sendUser.id,
         fromUID: user.uid,
         readTime: '',
-        type: Type.text,
+        type: type,
         sendTime: time);
 
     final ref =
         firestore.collection('chats/${getChatRoomId(sendUser.id)}/messages/');
     await ref.doc(time).set(message.toJson());
+  }
+
+  //To get last message
+  static Stream<QuerySnapshot<Map<String, dynamic>>> getLastMsg(UserData user) {
+    return firestore
+        .collection('chats/${getChatRoomId(user.id)}/messages/')
+        .orderBy('sendTime', descending: true)
+        .limit(1)
+        .snapshots();
+  }
+
+  //send image in chat
+  static Future<void> sendChatImage(UserData userData, File file) async {
+    final extn = file.path.split('.').last;
+    final ref = storage.ref().child(
+        "images/${getChatRoomId(userData.id)}/${DateTime.now().millisecondsSinceEpoch}.$extn");
+    await ref.putFile(file).then((p0) {
+      log("Data transfered ${p0.bytesTransferred / 1000} kb");
+    });
+    final imgUrl = await ref.getDownloadURL();
+
+    await sendMsg(userData, imgUrl, Type.image);
   }
 }

@@ -42,6 +42,7 @@ dependencies:
   google_sign_in: ^6.1.4
   cached_network_image: ^3.2.3
   image_picker: ^1.0.0
+  emoji_picker_flutter: ^1.6.1
 
 dev_dependencies:
   flutter_test:

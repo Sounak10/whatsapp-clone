@@ -28,6 +28,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
       child: Scaffold(
+          backgroundColor: Theme.of(context).colorScheme.background,
           appBar: AppBar(
             title: const Text('About User'),
           ),
@@ -135,7 +136,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                   Navigator.pop(context);
                                                 },
                                                 child: Image.asset(
-                                                    'lib/assets/imgs/gallery.png')),
+                                                    'lib/assets/imgs/gallery1.png')),
                                             const SizedBox(
                                               width: 20,
                                             ),
@@ -165,7 +166,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                                   Navigator.pop(context);
                                                 },
                                                 child: Image.asset(
-                                                    'lib/assets/imgs/camera-viewfinder.png'))
+                                                    'lib/assets/imgs/camera.png'))
                                           ],
                                         ),
                                         const SizedBox(
@@ -189,7 +190,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                   Text(
                     widget.user.email,
-                    style: const TextStyle(fontSize: 18, color: Colors.black54),
+                    style: TextStyle(
+                        fontSize: 18,
+                        color: Theme.of(context).colorScheme.secondary),
                   ),
                   const SizedBox(height: 10),
                   Padding(
@@ -229,6 +232,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                   const SizedBox(height: 20),
                   ElevatedButton.icon(
+                    style: const ButtonStyle(
+                        backgroundColor:
+                            MaterialStatePropertyAll(Color(0xFFF87A44))),
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
                         _formKey.currentState!.save();

@@ -44,6 +44,7 @@ class _HomeScreenState extends State<HomeScreen> {
           }
         },
         child: Scaffold(
+          backgroundColor: Theme.of(context).colorScheme.background,
           appBar: AppBar(
             elevation: 3,
             title: isSearching
@@ -75,7 +76,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     "Quick Chat",
                     style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                   ),
-            backgroundColor: const Color(0xFFF87A44),
+            // backgroundColor: const Color(0xFFF87A44),
             actions: [
               IconButton(
                   onPressed: () {
@@ -108,14 +109,14 @@ class _HomeScreenState extends State<HomeScreen> {
                   ))
             ],
           ),
-          floatingActionButton: Padding(
-            padding: const EdgeInsets.only(bottom: 10),
-            child: FloatingActionButton(
-              elevation: 3,
-              onPressed: () {},
-              child: const Icon(Icons.add_comment_rounded),
-            ),
-          ),
+          // floatingActionButton: Padding(
+          //   padding: const EdgeInsets.only(bottom: 10),
+          //   child: FloatingActionButton(
+          //     elevation: 3,
+          //     onPressed: () {},
+          //     child: const Icon(Icons.add_comment_rounded),
+          //   ),
+          // ),
           body: StreamBuilder(
             stream: Helper.getAllUser(),
             builder: (context, snapshot) {

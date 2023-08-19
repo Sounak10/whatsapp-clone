@@ -1,3 +1,5 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:wap_clone/components/time_format.dart';
 import 'package:wap_clone/models/chat_model.dart';
@@ -26,24 +28,42 @@ class _MessageCardState extends State<MessageCard> {
       children: [
         Container(
           decoration: BoxDecoration(
-              color: Colors.grey.shade300,
+              color: Theme.of(context).colorScheme.tertiary,
               borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(20),
                   topRight: Radius.circular(20),
                   bottomRight: Radius.circular(20))),
-          padding: const EdgeInsets.all(20),
+          padding: widget.message.type == Type.image
+              ? const EdgeInsets.all(10)
+              : const EdgeInsets.all(20),
           margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-          child: Text(
-            widget.message.msg,
-            style: const TextStyle(fontSize: 16),
-          ),
+          child: widget.message.type == Type.text
+              ? Text(
+                  widget.message.msg,
+                  style: const TextStyle(fontSize: 16),
+                )
+              : ClipRRect(
+                  borderRadius: BorderRadius.circular(10),
+                  child: CachedNetworkImage(
+                    imageUrl: widget.message.msg,
+                    placeholder: (context, url) =>
+                        const CircularProgressIndicator(
+                      strokeWidth: 2,
+                    ),
+                    errorWidget: (context, url, error) => const Icon(
+                      Icons.image,
+                      size: 70,
+                    ),
+                  ),
+                ),
         ),
         Padding(
           padding: const EdgeInsets.only(left: 20),
           child: Text(
             TimeFormat.getFormattedTime(
                 context: context, time: widget.message.sendTime),
-            style: const TextStyle(color: Colors.black26, fontSize: 12),
+            style: TextStyle(
+                color: Theme.of(context).colorScheme.secondary, fontSize: 12),
           ),
         )
       ],
@@ -61,19 +81,37 @@ class _MessageCardState extends State<MessageCard> {
                   topLeft: Radius.circular(20),
                   topRight: Radius.circular(20),
                   bottomLeft: Radius.circular(20))),
-          padding: const EdgeInsets.all(20),
+          padding: widget.message.type == Type.image
+              ? const EdgeInsets.all(10)
+              : const EdgeInsets.all(20),
           margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
-          child: Text(
-            widget.message.msg,
-            style: const TextStyle(fontSize: 16),
-          ),
+          child: widget.message.type == Type.text
+              ? Text(
+                  widget.message.msg,
+                  style: const TextStyle(fontSize: 16),
+                )
+              : ClipRRect(
+                  borderRadius: BorderRadius.circular(10),
+                  child: CachedNetworkImage(
+                    imageUrl: widget.message.msg,
+                    placeholder: (context, url) =>
+                        const CircularProgressIndicator(
+                      strokeWidth: 2,
+                    ),
+                    errorWidget: (context, url, error) => const Icon(
+                      Icons.image,
+                      size: 70,
+                    ),
+                  ),
+                ),
         ),
         Padding(
           padding: const EdgeInsets.only(right: 20),
           child: Text(
             TimeFormat.getFormattedTime(
                 context: context, time: widget.message.sendTime),
-            style: const TextStyle(color: Colors.black26, fontSize: 12),
+            style: TextStyle(
+                color: Theme.of(context).colorScheme.secondary, fontSize: 12),
           ),
         )
       ],
