@@ -287,7 +287,12 @@ class _ChatScreenState extends State<ChatScreen> {
           ElevatedButton(
             onPressed: () {
               if (_textController.text.isNotEmpty) {
-                Helper.sendMsg(widget.user, _textController.text, Type.text);
+                if (list.isEmpty) {
+                  Helper.sendFirstMessage(
+                      widget.user, _textController.text, Type.text);
+                } else {
+                  Helper.sendMsg(widget.user, _textController.text, Type.text);
+                }
                 _textController.text = '';
               }
             },

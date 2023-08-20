@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:ffi';
 import 'dart:io';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -70,10 +71,20 @@ class Helper {
   }
 
   //Get all other users except the one using it
-  static Stream<QuerySnapshot<Map<String, dynamic>>> getAllUser() {
+  static Stream<QuerySnapshot<Map<String, dynamic>>> getAllUser(
+      List<String> userIds) {
     return firestore
         .collection('users')
-        .where('id', isNotEqualTo: user.uid)
+        .where('id', whereIn: userIds.isEmpty ? [''] : userIds)
+        // .where('id', isNotEqualTo: user.uid)
+        .snapshots();
+  }
+
+  static Stream<QuerySnapshot<Map<String, dynamic>>> getMyUsersId() {
+    return firestore
+        .collection('users')
+        .doc(user.uid)
+        .collection('known_users')
         .snapshots();
   }
 
@@ -151,5 +162,37 @@ class Helper {
     final imgUrl = await ref.getDownloadURL();
 
     await sendMsg(userData, imgUrl, Type.image);
+  }
+
+  static Future<bool> addChatUser(String email) async {
+    final data = await firestore
+        .collection('users')
+        .where('email', isEqualTo: email)
+        .get();
+
+    if (data.docs.isNotEmpty && data.docs.first.id != user.uid) {
+      firestore
+          .collection('users')
+          .doc(user.uid)
+          .collection('known_users')
+          .doc(data.docs.first.id)
+          .set({});
+
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  static Future<void> sendFirstMessage(
+      UserData sendUser, String msg, Type type) async {
+    await firestore
+        .collection('users')
+        .doc(sendUser.id)
+        .collection('known_users')
+        .doc(user.uid)
+        .set({}).then((value) {
+      sendMsg(sendUser, msg, type);
+    });
   }
 }

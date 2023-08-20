@@ -204,6 +204,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ? null
                           : "Required Fields",
                       decoration: InputDecoration(
+                          focusedBorder: const OutlineInputBorder(
+                              borderSide: BorderSide(color: Color(0xFFF87A44))),
                           prefixIcon:
                               const Icon(CupertinoIcons.profile_circled),
                           border: OutlineInputBorder(
@@ -222,12 +224,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ? null
                           : "Required Fields",
                       decoration: InputDecoration(
+                          focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(color: Color(0xFFF87A44))),
                           prefixIcon: const Icon(
                               CupertinoIcons.bubble_left_bubble_right_fill),
                           border: OutlineInputBorder(
                               borderRadius: BorderRadius.circular(8)),
                           hintText: "Hi there,I am using Quick Chat",
-                          label: const Text("About")),
+                          label: const Text(
+                            "About",
+                          )),
                     ),
                   ),
                   const SizedBox(height: 20),
