@@ -85,12 +85,12 @@ class _ChatScreenState extends State<ChatScreen> {
                             widget.user.name,
                             style: const TextStyle(fontSize: 18),
                           ),
-                          Text(
-                            "Last seen",
-                            style: TextStyle(
-                                fontSize: 18,
-                                color: Theme.of(context).colorScheme.secondary),
-                          )
+                          // Text(
+                          //   "Last seen",
+                          //   style: TextStyle(
+                          //       fontSize: 18,
+                          //       color: Theme.of(context).colorScheme.secondary),
+                          // )
                         ],
                       )
                     ]),
