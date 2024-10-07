@@ -16,9 +16,7 @@ jobs:
         - uses: subosito/flutter-action@v1
           with: 
             flutter-version: '3.3'
-        - run: flutter upgrade --force
         - run: flutter pub get
-        - run: flutter pub add cached_network_image
         - run: flutter build apk --release
         - name: Push to Releases
           uses: ncipollo/release-action@v1
